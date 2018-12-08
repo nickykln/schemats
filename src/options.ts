@@ -6,15 +6,16 @@ const DEFAULT_OPTIONS: OptionValues = {
 }
 
 export type OptionValues = {
-    camelCase?: boolean
-    writeHeader?: boolean // write schemats description header
+    camelCase?: boolean;
+    writeHeader?: boolean; // write schemats description header
+    generateClasses?: boolean; // Generate classes instead of interfaces
 }
 
 export default class Options {
     public options: OptionValues
 
     constructor (options: OptionValues = {}) {
-        this.options = {...DEFAULT_OPTIONS, ...options}
+        this.options = { ...DEFAULT_OPTIONS, ...options }
     }
 
     transformTypeName (typename: string) {
