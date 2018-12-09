@@ -25,7 +25,7 @@ let argv: SchematsConfig = yargs
   .default('config', 'schemats.json')
   .config()
   .env('SCHEMATS')
-  .command('generate', 'generate type definition')
+  .command('generate', 'generate type definition 2')
   .demand(1)
   // tslint:disable-next-line
   .example(
@@ -44,8 +44,8 @@ let argv: SchematsConfig = yargs
   .describe('s', 'schema name')
   .alias('C', 'camelCase')
   .describe('C', 'Camel-case columns')
-  .alias('class', 'class')
-  .describe('class', 'Generate Classes instead of interfaces')
+  .describe('generateClasses', 'Generate Classes instead of interfaces')
+  .alias('G', 'generateClasses')
   .describe('noHeader', 'Do not write header')
   .demand('o')
   .nargs('o', 1)
@@ -56,29 +56,29 @@ let argv: SchematsConfig = yargs
 
 (async () => {
     try {
-      if (!Array.isArray(argv.table)) {
-        if (!argv.table) {
-          argv.table = []
-      } else {
-          argv.table = [argv.table]
-      }
-    }
+        if (!Array.isArray(argv.table)) {
+            if (!argv.table) {
+                argv.table = []
+            } else {
+                argv.table = [argv.table]
+            }
+        }
 
-      let formattedOutput = await typescriptOfSchema(
+        let formattedOutput = await typescriptOfSchema(
       argv.conn,
       argv.table,
       argv.schema,
-        {
-            camelCase: argv.camelCase,
-            writeHeader: !argv.noHeader,
-            generateClasses: argv.generateClasses
-        }
+            {
+                camelCase: argv.camelCase,
+                writeHeader: !argv.noHeader,
+                generateClasses: argv.generateClasses
+            }
     )
-      fs.writeFileSync(argv.output, formattedOutput)
-  } catch (e) {
-      console.error(e)
-      process.exit(1)
-  }
+        fs.writeFileSync(argv.output, formattedOutput)
+    } catch (e) {
+        console.error(e)
+        process.exit(1)
+    }
 })()
   .then(() => {
       process.exit()
