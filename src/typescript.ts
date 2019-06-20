@@ -39,7 +39,6 @@ export function generateTableInterface (
     })
     let type = 'interface'
     if (
-    options.options.generateClasses !== null &&
     options.options.generateClasses === true
   ) {
         type = 'class'
@@ -56,10 +55,10 @@ export function generateEnumType (enumObject: any, options: Options) {
     for (let enumNameRaw in enumObject) {
         const enumName = options.transformTypeName(enumNameRaw)
         enumString += `export type ${enumName} = `
-      enumString += enumObject[enumNameRaw]
-      .map((v: string) => `'${v}'`)
-      .join(' | ')
-      enumString += ';\n'
+        enumString += enumObject[enumNameRaw]
+        .map((v: string) => `'${v}'`)
+        .join(' | ')
+        enumString += ';\n'
     }
     return enumString
 }
